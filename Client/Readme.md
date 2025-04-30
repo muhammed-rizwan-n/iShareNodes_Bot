@@ -111,9 +111,12 @@ Rewards are distributed on a daily basis by the **Wallet Bot**, and users can vi
 
 > Efficient **timestamp-based sorting** and **merging algorithms** are used to group rewards into clean daily reports. This makes it easier for users to track performance over time.
 <p float="left">
-  <img src="./screenshots/status1.png" width="30%" />
-  <img src="./screenshots/status2.png" width="30%" />
-  <img src="./screenshots/rewards1.png" width="30%" />
+  <img src="./screenshots/IMG-20250430-WA0025.jpg" width="30%" />
+  <img src="./screenshots/IMG-20250430-WA0027.jpg" width="30%" />
+  <img src="./screenshots/IMG-20250430-WA0028.jpg" width="30%" />
+  <img src="./screenshots/IMG-20250430-WA0029.jpg" width="30%" />
+  <img src="./screenshots/IMG-20250430-WA0030.jpg" width="30%" />
+
 </p>
 
 ---
@@ -121,16 +124,15 @@ Rewards are distributed on a daily basis by the **Wallet Bot**, and users can vi
 
 Users can click a dedicated button to access a detailed breakdown of how their funds are distributed across active masternodes. This provides transparency and real-time insight into:
 
-- Coin-wise and node-wise allocation percentages  
-- User's share in each masternode  
-- Estimated reward share per node  
+- Coin-wise and node-wise allocation percentages
+- User's share in each masternode
+- Estimated reward share per node
 - Current status of each node (active/inactive)
 
 The interface is rendered using **Discord embeds** or **paginated buttons**, allowing smooth scrolling and visibility across mobile and desktop devices.
 <p float="left">
-  <img src="./screenshots/status1.png" width="30%" />
-  <img src="./screenshots/status2.png" width="30%" />
-  <img src="./screenshots/rewards1.png" width="30%" />
+  <img src="./screenshots/IMG-20250430-WA0026.jpg" width="30%" />
+  <img src="./screenshots/IMG-20250430-WA0032.jpg" width="30%" />
 </p>
 
 ---
@@ -150,14 +152,6 @@ To keep performance optimal, allocation data is also supported by the **Master B
 - Merge daily rewards for efficient analytics and clean summaries
 
 This backend design offloads heavy computation from the Client Bot, ensuring that all interactions remain fast, responsive, and privacy-focused via ephemeral messages.
-
-
-### Screenshots
-<p float="left">
-  <img src="./screenshots/status1.png" width="30%" />
-  <img src="./screenshots/status2.png" width="30%" />
-  <img src="./screenshots/rewards1.png" width="30%" />
-</p>
 
 ---
 
