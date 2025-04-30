@@ -32,7 +32,7 @@ This modular handoff between the **Client Bot** (UI/interaction) and the **Maste
 
 
 ---
-## 💼 2. Deposits, Withdrawals & Masternode Allocation
+## 💼 2. Deposits, Withdrawals 
 
 All operations in the client interface are fully interaction-based and presented as **ephemeral messages** — responses that are only visible to the requester. This makes it possible to use a **shared public channel** for all interactions without exposing private user data.
 
@@ -74,39 +74,83 @@ All confirmations and status updates are sent as ephemeral messages, maintaining
   <img src="./screenshots/IMG-20250430-WA0010.jpg" width="30%" />
 
 </p>
+
 ---
 
-### 📊 Masternode Allocation View
+## 📊 3. Portfolio Status, Rewards & Masternode Allocation
 
-Each user can view how their deposited funds have been allocated across different masternodes:
-- Interactive dashboards show allocations per coin.
-- A clean, scrollable layout is rendered using Discord embeds or paginated buttons.
-- Data is presented as a **sorted, timestamped log** of contributions and their associated node shares.
+This section gives users a comprehensive view of their holdings, earnings, and how their funds are allocated within the shared masternode network.
 
-> Behind the scenes, **data structures and algorithms (DSA)** like sorted lists and time-indexed maps are used to:
-- Sort user deposits and rewards by date.
-- Merge daily rewards into clear, digestible summaries.
-- Aggregate rewards efficiently for display and analytics.
+All user interactions are handled via **ephemeral messages** in public channels, ensuring privacy without sacrificing a seamless UI experience.
 
-This design keeps interactions lightweight on the client while offloading processing to the Master Bot.
+---
 
-### Screenshots
+### 💼 Portfolio Overview
+
+Users can view their crypto portfolio using a simple interaction button. The data shown includes:
+- Total deposits (coin-wise)
+- Withdrawable balance
+- Pending transactions
+- Daily rewards
+
+All relevant data is fetched from a local **MongoDB** instance.
 <p float="left">
-  <img src="./screenshots/deposit1.png" width="30%" />
-  <img src="./screenshots/withdraw1.png" width="30%" />
-  <img src="./screenshots/allocation1.png" width="30%" />
+  <img src="./screenshots/IMG-20250430-WA0015.jpg" width="30%" />
+  <img src="./screenshots/IMG-20250430-WA00-5.jpg" width="30%" />
+  <img src="./screenshots/IMG-20250430-WA0016.jpg" width="30%" />
 </p>
 
 ---
 
-## 📈 3. Status & Rewards Tracking
+### 🎁 Daily Rewards Tracking
 
-The bot allows users to check the status of their investment, see masternode uptime, and track rewards received over time.
+Rewards are distributed on a daily basis by the **Wallet Bot**, and users can view:
+- A timeline of daily reward summaries
+- Merged reward data grouped by coin and day
+- Individual node earnings
 
-### Key Features:
-- `/status` command shows current contribution and rewards.
-- Notifications when rewards are distributed.
-- Simple charts or summaries on request.
+> Efficient **timestamp-based sorting** and **merging algorithms** are used to group rewards into clean daily reports. This makes it easier for users to track performance over time.
+<p float="left">
+  <img src="./screenshots/status1.png" width="30%" />
+  <img src="./screenshots/status2.png" width="30%" />
+  <img src="./screenshots/rewards1.png" width="30%" />
+</p>
+
+---
+### 🧩 Masternode Allocation
+
+Users can click a dedicated button to access a detailed breakdown of how their funds are distributed across active masternodes. This provides transparency and real-time insight into:
+
+- Coin-wise and node-wise allocation percentages  
+- User's share in each masternode  
+- Estimated reward share per node  
+- Current status of each node (active/inactive)
+
+The interface is rendered using **Discord embeds** or **paginated buttons**, allowing smooth scrolling and visibility across mobile and desktop devices.
+<p float="left">
+  <img src="./screenshots/status1.png" width="30%" />
+  <img src="./screenshots/status2.png" width="30%" />
+  <img src="./screenshots/rewards1.png" width="30%" />
+</p>
+
+---
+
+The data is managed and served by the **Wallet Bot**, which:
+- Fairly allocates user deposits across available masternodes
+- Ensures that all participants receive **equal opportunity** in rewards and allocations
+- Embeds these allocation summaries directly in the daily reward reports
+
+To keep performance optimal, allocation data is also supported by the **Master Bot** for fast retrieval and formatting.
+
+---
+
+> Behind the scenes, **data structures and algorithms (DSA)** such as sorted lists and timestamp-based maps are used to:
+- Track contributions over time
+- Sort deposits and rewards by date
+- Merge daily rewards for efficient analytics and clean summaries
+
+This backend design offloads heavy computation from the Client Bot, ensuring that all interactions remain fast, responsive, and privacy-focused via ephemeral messages.
+
 
 ### Screenshots
 <p float="left">
@@ -117,20 +161,63 @@ The bot allows users to check the status of their investment, see masternode upt
 
 ---
 
-## 💼 4. Deposits & Withdrawals
+## 🛠️ 4. Support Options
 
-Users can deposit funds to their wallet address and request withdrawals through the bot. This ensures ease of liquidity and access to funds when needed.
+The support section is designed to provide quick and organized assistance — directly within Discord. There are no external links, emails, or redirections involved. All actions are done via interactions and modals to keep the process intuitive and responsive.
 
-### Key Features:
-- `/deposit` command provides a unique wallet address.
-- `/withdraw` initiates a withdrawal request with confirmation.
-- View pending and completed transactions.
+---
 
-### Screenshots
+### 📥 Report Missing Deposit
+
+Users can report if a deposit hasn’t reflected in their account. Upon clicking the relevant button:
+- A modal is presented to enter transaction ID, coin, and date.
+- The request is sent to the **Master Bot** for verification.
+- Updates or resolutions are sent as ephemeral messages.
+
+#### Screenshots
 <p float="left">
-  <img src="./screenshots/deposit1.png" width="30%" />
-  <img src="./screenshots/withdraw1.png" width="30%" />
-  <img src="./screenshots/withdraw2.png" width="30%" />
+  <img src="./screenshots/missing_deposit1.png" width="30%" />
+  <img src="./screenshots/missing_deposit2.png" width="30%" />
+  <img src="./screenshots/missing_deposit3.png" width="30%" />
+</p>
+
+---
+
+### 🔐 Change Withdrawal Address
+
+Users can securely update their withdrawal address through a modal form. This includes:
+- Input validation of address format
+- Notification of change history
+- Confirmation prompt before submission
+
+#### Screenshots
+<p float="left">
+  <img src="./screenshots/change_address1.png" width="30%" />
+  <img src="./screenshots/change_address2.png" width="30%" />
+  <img src="./screenshots/change_address3.png" width="30%" />
+</p>
+
+---
+
+### 🧾 Contact Support (Ticket System)
+
+Unlike traditional email support, iShareNodes uses a **Discord-native ticket system** for seamless, real-time issue tracking.
+
+#### How It Works:
+- A modal is presented to collect the **subject** and **message**.
+- Upon submission, the **Client Bot** auto-generates a **private channel** and starts a **thread** to handle the ticket.
+- All communication between the user and the support team takes place within this thread.
+- This design prevents multiple queries from being mixed together and provides a clean history of communication.
+
+#### Extra Features:
+- Users can **close** or **reopen** their ticket at will.
+- They are **notified** when the support team responds inside the thread.
+
+#### Screenshots
+<p float="left">
+  <img src="./screenshots/contact_support1.png" width="30%" />
+  <img src="./screenshots/contact_support2.png" width="30%" />
+  <img src="./screenshots/contact_support3.png" width="30%" />
 </p>
 
 ---
