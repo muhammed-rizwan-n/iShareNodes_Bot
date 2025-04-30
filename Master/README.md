@@ -25,7 +25,7 @@ The Master Bot is responsible for interpreting, validating, and responding to us
 Besides core user and wallet functionality, the Master Bot handles various internal utilities that keep the system secure and maintainable.
 - `decrypt_request` – Decrypts encrypted messages sent via Discord webhooks by the Client or Wallet bot. This ensures that only authenticated, intentional requests are processed.
 - `notify_error` – Reports unexpected failures or logic errors by sending logs or alerts to the admin or logging channel.
-- `validate_interaction` – Validates that the request originated from a legitimate Discord interaction. Helps in ensuring that requests are not spoofed or replayed after expiry.
+- `validate_user_interaction` – Validates that the request originated from a legitimate Discord interaction. Helps in ensuring that requests are not spoofed or replayed after expiry.
 - `log_activity`  – Records internal actions (such as deposits, verifications, etc.) in a secure, internal-only log to assist in audits and debugging.
 - `send_email` – Sends authentication token or alerts to users via email for account verification and other secure interactions.
 - `create_auth_key` – Generates a time-based one-time password (TOTP) secret for 2FA during account creation or recovery.
@@ -44,8 +44,34 @@ Discord **does not allow direct communication** between bots. To overcome this, 
    - `interaction_token`
 2. The Client/Wallet bot encrypts the request payload using internal encryption methods.
 3. This encrypted payload is passed to the Master Bot via a **Discord Webhook**.
+<img src="./screenshots/IMG-2025-WA0001.png" />  
 4. The Master Bot decrypts the request and **validates its authenticity** using the Discord interaction ID/token.
+```sh
+async def decrypt_request(x,content):
+    try:
+        content = json.loads(content)
+        fernet = Fernet(decrypt_key(x['key']))
+        content = fernet.decrypt(content.encode()).decode()
+        x.update(content)
+        return x,True
+    except Exception as error:
+        return x,False
+```
 5. If validation passes, the request is processed; if not, it's rejected silently.
+```sh
+async def validate_user_interaction(x):
+    async with aiohttp.ClientSession() as session:
+        async with session.get(f"https://discord.com/api/webhooks/{x['application_id']}/{x['interaction_token']}/messages/@original") as response:
+            #print_logger(await response.json(),x['application_id'],x['interaction_token'])
+            try:
+                if await response.json()['interaction_metadata']['user']['id'] == x['discord_id'] and await response.json()['interaction_metadata']['timestamp'] == x['time']:
+                    return True
+                else:
+                    return False
+            except Exception as err:
+                print_logger("User check failed:",err)
+                return False
+```
 
 > ✅ This mechanism ensures:
 - Bot-to-bot data flow without exposing endpoints
