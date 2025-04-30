@@ -52,6 +52,8 @@ To prevent wallet corruption and unauthorized key changes, the Wallet Bot implem
   - The wallet is **immediately paused** from going online.
   - An **error report** is sent to the admin for manual inspection.
   - All automated actions for the affected wallet are suspended to avoid fund mismanagement.
+  
+  <img src="./screenshots/IMG-2025-WA0001.png"/>
 
 > This validation ensures that a newly created or corrupted wallet (which would have a different set of keys) is never mistakenly treated as the original one.
 
@@ -60,6 +62,8 @@ To prevent wallet corruption and unauthorized key changes, the Wallet Bot implem
   - New addresses are generated and appended to the pool.
   - A fresh `wallet.dat` backup is created and securely stored.
   - The updated `keypoololdest` is saved in the database for future integrity checks.
+  <img src="./screenshots/IMG-2025-WA0002.png"/>
+
 - This guarantees that even in cases of software or storage failure, a **recoverable wallet state** is always available.
 
 > These features work together to ensure the **authenticity, consistency, and recoverability** of the wallet at all times.
