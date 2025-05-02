@@ -44,8 +44,9 @@ Discord **does not allow direct communication** between bots. To overcome this, 
    - `interaction_token`
 2. The Client/Wallet bot encrypts the request payload using internal encryption methods.
 3. This encrypted payload is passed to the Master Bot via a **Discord Webhook**.
-<img src="./screenshots/IMG-2025-WA0001.png" />  
+<p><img src="./screenshots/IMG-2025-WA0001.png" />  <p/>
 4. The Master Bot decrypts the request and **validates its authenticity** using the Discord interaction ID/token.
+   
 ```sh
 async def decrypt_request(x,content):
     try:
@@ -58,6 +59,7 @@ async def decrypt_request(x,content):
         return x,False
 ```
 5. If validation passes, the request is processed; if not, it's rejected silently.
+
 ```sh
 async def validate_user_interaction(x):
     async with aiohttp.ClientSession() as session:
